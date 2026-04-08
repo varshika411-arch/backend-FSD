@@ -34,6 +34,8 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.post('/register', register);
+app.post('/login', login);
 app.post('/api/register', register);
 app.post('/api/login', login);
 app.use('/api/auth', authRoutes);
