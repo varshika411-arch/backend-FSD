@@ -2,11 +2,11 @@
   "name": "achievetrack-backend",
   "version": "1.0.0",
   "description": "Backend API for AchieveTrack Student Achievement Management System",
-  "main": "src/server.jsx",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node --import ./src/register-jsx-loader.mjs src/server.jsx",
-    "dev": "nodemon --watch src --ext jsx --exec \"node --import ./src/register-jsx-loader.mjs\" src/server.jsx",
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --ext js --exec node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
