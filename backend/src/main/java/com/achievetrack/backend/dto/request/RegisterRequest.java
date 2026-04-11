@@ -21,4 +21,25 @@ public record RegisterRequest(
         @NotBlank(message = "Phone is required")
         String phone
 ) {
+    public RegisterRequest {
+        name = trim(name);
+        email = normalizeEmail(email);
+        studentId = trim(studentId);
+        role = normalizeRole(role);
+        phone = trim(phone);
+    }
+
+    private static String trim(String value) {
+        return value == null ? null : value.trim();
+    }
+
+    private static String normalizeEmail(String value) {
+        String trimmed = trim(value);
+        return trimmed == null ? null : trimmed.toLowerCase();
+    }
+
+    private static String normalizeRole(String value) {
+        String trimmed = trim(value);
+        return trimmed == null ? null : trimmed.toLowerCase();
+    }
 }
