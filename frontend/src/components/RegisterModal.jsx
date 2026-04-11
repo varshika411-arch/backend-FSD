@@ -20,7 +20,11 @@ export function RegisterModal({
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!role || !name || !email || !password || !confirmPassword || !phone) {
+    const sanitizedRole = role.trim().toLowerCase();
+    const sanitizedName = name.trim();
+    const sanitizedEmail = email.trim().toLowerCase();
+    const sanitizedPhone = phone.trim();
+    if (!sanitizedRole || !sanitizedName || !sanitizedEmail || !password || !confirmPassword || !sanitizedPhone) {
       toast.error('Please fill in all required fields');
       return;
     }
@@ -28,13 +32,17 @@ export function RegisterModal({
       toast.error('Passwords do not match');
       return;
     }
+    if (password.trim().length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
     setIsLoading(true);
     const success = await onRegister({
-      role,
-      name,
-      email,
+      role: sanitizedRole,
+      name: sanitizedName,
+      email: sanitizedEmail,
       password,
-      phone
+      phone: sanitizedPhone
     });
     setIsLoading(false);
     if (success) {

@@ -19,7 +19,8 @@ function AppContent() {
     currentUser,
     login,
     logout,
-    register
+    register,
+    resetPassword
   } = useApp();
   const handleLogin = async (email, password) => {
     const success = await login(email, password);
@@ -35,6 +36,15 @@ function AppContent() {
       });
       setIsRegisterModalOpen(false);
       setIsLoginModalOpen(true);
+    }
+    return success;
+  };
+  const handleResetPassword = async resetData => {
+    const success = await resetPassword(resetData);
+    if (success) {
+      setPendingLogin({
+        email: resetData.email || ''
+      });
     }
     return success;
   };
@@ -54,7 +64,7 @@ function AppContent() {
 
       {currentUser?.role === 'admin' && <AdminDashboard userName={currentUser.name} onLogout={logout} />}
 
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLogin={handleLogin} defaultEmail={pendingLogin.email} onShowRegister={() => {
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLogin={handleLogin} onResetPassword={handleResetPassword} defaultEmail={pendingLogin.email} onShowRegister={() => {
       setIsLoginModalOpen(false);
       setIsRegisterModalOpen(true);
     }} />

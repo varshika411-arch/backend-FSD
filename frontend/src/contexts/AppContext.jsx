@@ -75,7 +75,14 @@ export const AppProvider = ({ children }) => {
 
   const register = async (registerData) => {
     try {
-      const { data } = await api.post('/auth/register', registerData);
+      const payload = {
+        ...registerData,
+        name: registerData.name?.trim() || '',
+        email: registerData.email?.trim().toLowerCase() || '',
+        role: registerData.role?.trim().toLowerCase() || '',
+        phone: registerData.phone?.trim() || ''
+      };
+      const { data } = await api.post('/auth/register', payload);
       if (!data.success) {
         toast.error(data.message || 'Registration failed');
         return false;
@@ -83,8 +90,28 @@ export const AppProvider = ({ children }) => {
       toast.success('Registration successful. Please log in.');
       return true;
     } catch (err) {
-      const msg = err?.response?.data?.message;
+      const msg = err?.response?.data?.message || err?.message;
       toast.error(msg || 'Registration failed. Please try again.');
+      return false;
+    }
+  };
+
+  const resetPassword = async ({ email, password, confirmPassword }) => {
+    try {
+      const { data } = await api.post('/auth/reset-password', {
+        email,
+        password,
+        confirmPassword
+      });
+      if (!data.success) {
+        toast.error(data.message || 'Password reset failed');
+        return false;
+      }
+      toast.success(data.message || 'Password reset successful. Please log in.');
+      return true;
+    } catch (err) {
+      const msg = err?.response?.data?.message;
+      toast.error(msg || 'Password reset failed. Please try again.');
       return false;
     }
   };
@@ -483,7 +510,7 @@ export const AppProvider = ({ children }) => {
 
   const value = {
     currentUser, isAuthenticated: !!currentUser,
-    login, logout, register, updateProfile,
+    login, logout, register, resetPassword, updateProfile,
     users, refreshUsers, updateStudent, deleteUser,
     achievements, refreshAchievements, submitAchievement, verifyAchievement, deleteAchievement,
     events, refreshEvents, createEvent, updateEvent, deleteEvent, registerForEvent, unregisterFromEvent,
