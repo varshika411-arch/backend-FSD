@@ -44,6 +44,8 @@ public class Achievement {
 
     private Integer points;
 
+    private Boolean verified;
+
     @Column(name = "verified_by")
     private Long verifiedBy;
 

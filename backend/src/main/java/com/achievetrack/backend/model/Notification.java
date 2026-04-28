@@ -34,7 +34,7 @@ public class Notification {
 
     private String type;
 
-    @Column(name = "read")
+    @Column(name = "`read`")
     private Boolean read;
 
     @Column(name = "created_at")

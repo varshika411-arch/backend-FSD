@@ -113,6 +113,7 @@ public class AchievementService {
                 .evidenceUrl(evidenceUrl)
                 .status("pending")
                 .points(0)
+                .verified(Boolean.FALSE)
                 .createdAt(now)
                 .updatedAt(now)
                 .build();
@@ -206,6 +207,7 @@ public class AchievementService {
         String normalizedStatus = "accepted".equalsIgnoreCase(request.status()) ? "approved" : request.status();
         achievement.setStatus(normalizedStatus);
         achievement.setPoints(request.points() == null ? 0 : request.points());
+        achievement.setVerified(Boolean.TRUE);
         achievement.setVerifiedBy(currentUser.id());
         achievement.setVerifiedAt(LocalDateTime.now());
         achievement.setRejectionReason(StringUtils.hasText(request.rejectionReason()) ? request.rejectionReason().trim() : null);

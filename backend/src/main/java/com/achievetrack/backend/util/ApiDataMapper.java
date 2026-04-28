@@ -58,6 +58,7 @@ public class ApiDataMapper {
         data.put("evidence_url", achievement.getEvidenceUrl());
         data.put("status", achievement.getStatus());
         data.put("points", achievement.getPoints());
+        data.put("verified", achievement.getVerified());
         data.put("verified_by", achievement.getVerifiedBy());
         data.put("verified_at", achievement.getVerifiedAt());
         data.put("rejection_reason", achievement.getRejectionReason());
